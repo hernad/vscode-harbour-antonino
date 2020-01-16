@@ -1,63 +1,63 @@
-# Prologo
-Il deubbger si mette in ascolto sulla porta 6110, quindi lancia il programma, al primo client che si collega smette di ascoltare e gestisce questo come il programma da debuggare.
-a questo punto cominciano a scambiarsi pacchetti, essi hanno forma asimettrica, *da cambiare*.
-Quelli dal -> debugger verso il programma hanno forma COMANDO:PARAM1:PARAM2:PARAM3...\r\n.
-Quelli dal <- programma verso il debugger hanno forma COMANDO\r\nPARAM1\r\nPARAM2\r\n.
+# Prologue
+
+The deubbger listens on port 6110, then launches the program, the first client that connects stops listening and manages this as the program to be debugged.
+at this point they begin to exchange packets, they have an asymmetrical shape, * to be changed *.
+Those from the -> program debugger have the form COMMAND: PARAM1: PARAM2: PARAM3 ... \ r \ n.
+Those from the <- program to the debugger have the form COMMAND \ r \ nPARAM1 \ r \ nPARAM2 \ r \ n.
 
 ## GO ->
-Indica al programma di proseguire l'esecuzione
+Tells the program to continue execution
 
 ## NEXT ->
-Indica al programma di eseguire la prossima istruzione
+Tells the program to execute the next instruction
 
 ## STEP ->
-Indica al programma di eseguire la prossima istruzione allo stesso livello
+Tells the program to execute the next statement at the same level
 
 ## EXIT ->
-Indica al programma di uscire dal metoo corrente
+Tells the program to exit the current metoo
 
 ## PAUSE ->
-Indica al programma di interrompere l'esecuzione alla prima istruzione ***compilata con i simboli di debug***.
+Tells the program to stop execution at the first *** instruction compiled with the debug symbols ***.
 
 ## STOP <-
-Indica che il programma si è interrotto. è seguito da una descrizione testuale del perché si è fermato, ad esempio "Break" perché ha trovato un breakpoint, "Pause" perche é stato procesato il comando PAUSE,  ecc...
+Indicates that the program has stopped. is followed by a textual description of why it stopped, for example "Break" because it found a breakpoint, "Pause" because the PAUSE command was processed, etc ...
 
 ## ERROR <-
-Indica che il programma si è interrotto a seguito di un'errore
+Indicates that the program has stopped due to an error
 
 ## INERROR ->
-Chiede se si è in errore, il programma restituisce T se si è in errore. ***Inutile***
+Asks if you are in error, the program returns T if you are in error. *** Needless ***
 
 ## BREAKPOINT ->
-Indica che sto per inviare un break point. la seconda riga ha l'elenco dei parametri separati da : due punti.
- * \+ per i breapoint da aggiungere, - per quelli da togliere
- * il nome del file
- * la riga
- * opzionalmente ? seguito da (separato da due punti) un comando in harbour da esegure dove i : sono sostituiti da ;. Il breakpoint scatta solo se la condizione è vera.
- * opzionalmente C seguito da (separato da due punti) un numero ad indicare dopo quante volte il breakpoint scatterà
- * opzionalmente L seguito da (separato da due punti) una stringa dove le parte tra parentesi graffe vengono eseguite (***da cambiare***)
+Indicates that I am about to send a break point. the second line has the list of parameters separated by: a colon.
+ * \ + for breapoints to be added, - for breaches to be removed
+ * the name of the file
+ * the line
+ * optionally? followed by (separated by a colon) a command in harbor from esegure where i: are replaced by;. The breakpoint is triggered only if the condition is true.
+ * optionally C followed by (separated by a colon) a number to indicate after how many times the breakpoint will start
+ * optionally L followed by (separated by a colon) a string where the parts in braces are performed (*** to be changed ***)
 
 ## LOG <-
-Richiede la stampa di una stringa di debug, che seguie il "LOG:"
+Requires printing a debug string, which follows the "LOG:"
 
 ## LOCALS, PUBLICS, PRIVATES, PRIVATE_CALLEE, STATICS ->
-Richede la lista delle variabili nello scopo indicato dal comando. la seconda riga ha l'elenco dei parametri separati da : due punti.
- * il livello dello stack
- * l'indice del primo elemento da tornare, partendo da 1
- * il numero di element da tornare, 0 per averli tutti.
-il programma risponderò con un messaggio che comincia con lo stesso comando, seguito da le informazioni separate da 2 punti:
- * la prima parte del comando per avere i figli di questa variabile, 3 lettere
- * il libello dello stack
- * l'id di questa variabile (numerico)
- * il nome dell'id di questa variabile 
- * il nome 
+Requires the list of variables for the purpose indicated by the command. the second line has the list of parameters separated by: a colon.
+ * the stack level
+ * the index of the first element to return, starting from 1
+ * the number of elements to return, 0 to have them all.
+the program will reply with a message that starts with the same command, followed by the information separated by 2 points:
+ * the first part of the command to have children of this variable, 3 letters
+ * the libellus of the stack
+ * the id of this variable (numeric)
+ * the id name of this variable
+ * the name
 
 ## EXPRESSION ->
-Richiede l'esecuzione di un comando. la seconda riga ha l'elenco dei parametri separati da : due punti.
- * il livello nello stack
- * l'espressione dove i : sono stituiti da ;
-Per ognuno di questi comandi il debugger risponderà con un messaggio che comincia con **EXPRESSION** seguito da le informazioni separate da 2 punti:
- * il livello dello stack
- * il tipo del risultato, può valere U, N, C, L, A, H, O ecc..
- * il risultato da mostrare, nel caso di N,C,L oppure il numero di figli nel caso A,H,O
-
+Requires execution of a command. the second line has the list of parameters separated by: a colon.
+ * the level on the stack
+ * the expression where i: are replaced by;
+For each of these commands the debugger will respond with a message that begins with ** EXPRESSION ** followed by the information separated by 2 points:
+ * the stack level
+ * the type of the result can be U, N, C, L, A, H, O etc ...
+ * the result to show, in the case of N, C, L or the number of children in the case of A, H, O
