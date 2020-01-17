@@ -11,8 +11,12 @@
             "program": "${workspaceRoot}/test_proj",
             "workingDir": "${workspaceRoot}/",
             "sourcePaths": [
-                "${workspaceRoot}"
-            ]
+                "${workspaceRoot}",
+                "${workspaceRoot}/common",
+                "${workspaceRoot}/fin"
+            ],
+            "preLaunchTask": "compileDebug",
+            "terminalType": "integrated"
         }
     ]
 }
